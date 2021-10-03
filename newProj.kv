@@ -1,0 +1,131 @@
+<NewProj>
+    on_pre_enter: self.load()
+    rows:rows
+    cols:cols
+    pallettes:pallettes
+
+    orientation: 'vertical'
+    padding: 30
+    spacing: 10
+    Label:
+        text: "New Project"
+        size_hint: (1, 0.1)
+        font_size: "25sp"
+    
+    
+    Label:
+        text: "Image"
+        size_hint: (1,0.1)
+
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: (1, 0.2)
+        canvas:
+            Color:
+                rgba: (0.3,0.3,0.3,0.3)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        LabelButton:
+            text: "Upload"
+        IconImage:
+            source: './resources/x.png'
+
+    Label:
+        text: "Grid Size"
+        size_hint: (1, 0.1)
+    BoxLayout:
+        orientation: 'horizontal'
+        padding: 5
+        id:gridBox
+        canvas:
+            Color:
+                rgba: (0.3,0.3,0.3,0.3)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        size_hint: (1, 0.2)
+        spacing: 1
+        
+        Widget:
+
+
+        AnchorLayout:
+            anchor_x: 'right'
+            BoxLayout:
+                size_hint: (None, None)
+                Label:
+                    text: "Rows"
+                    size_hint: (None, None)
+                      
+        TextInput:
+            id:rows
+            padding: [10, (self.height-self.line_height)/2]
+            multiline: False
+            size_hint: (1, None)
+            height: gridBox.height - 10
+        Widget:
+        AnchorLayout:
+            anchor_x: 'right'
+            BoxLayout:
+                size_hint: (None, None)
+                
+                Label:
+                    text: "Columns"
+                    size_hint: (None, None)
+        TextInput:
+            id:cols
+            padding: [10, (self.height-self.line_height)/2]
+            multiline: False
+            size_hint: (1,None)
+            height: gridBox.height - 10
+        Widget:
+
+
+    Label:
+        text: "Color Pallette"
+        size_hint: (1,0.1)
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: (1, 1)
+        spacing: 5
+        ScrollView:
+
+            canvas:
+                Color:
+                    rgba: (.2,.2,.2,.2)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                
+            StackLayout:
+                orientation: 'lr-tb'
+                padding: [10,20,0,0]
+                spacing: 20
+                id:pallettes
+                size_hint_y: None
+                height: self.minimum_height
+        LabelButton:
+            text: "Choose Pallette"
+            size_hint: (1, 0.2)
+            on_release: 
+                root.manager.get_screen("Pallettes").state = 'newProjPallette'
+                root.manager.current = 'Pallettes'
+
+    
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: (1, 0.2)
+        spacing: 5
+        LabelButton:
+            text: 'Create Project'
+            color: (0,1,0,1)
+        LabelButton:
+            text: "Cancel"
+            color: (1,0,0,1)
+
+
+                
+
+    

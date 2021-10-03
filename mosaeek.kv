@@ -1,0 +1,566 @@
+#<Label>:
+ #   font_name: '/home/julien/pixart/pixart_temp-main/pixelArt_phone_component/Roboto-Regular.ttf'
+
+<MainMenu>
+    orientation: 'vertical'
+    
+    Label:
+        text: "Mosaeek!"
+        font_size: "25sp"
+        size_hint: (1,0.3)
+    AnchorLayout:
+        BoxLayout:
+            orientation:'vertical'
+            size_hint: (0.5,1)
+            padding:30
+            spacing:30
+            LabelButton:
+                text: "Continue"
+                on_release: root.manager.current = 'current_proj'
+            LabelButton:
+                text: "New Project"
+                on_release:
+                    root.manager.current = 'NewProj'
+            LabelButton:
+                text: "Pallettes"
+                on_release: 
+                    root.manager.get_screen('Pallettes').state = 'pallettes'
+                    root.manager.current = 'Pallettes'
+            LabelButton:
+                text: "Exit"
+                on_release: app.stop()
+
+
+
+
+<MainLayout>
+    mainBtn:mainBtn
+    iconIm:iconIm
+    orientation: 'vertical'
+    spacing: 10
+    padding: 20
+    title: "Mosaeek! 1"
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: (1, 0.2)
+        Widget:
+            size_hint:(2,1)
+
+        BoxLayout:
+            orientation: 'vertical'
+            
+            Label:
+                text: "Row"
+                font_size: "14sp"
+                
+            Label:
+                text: root.row
+                font_size: "25sp"
+                
+        
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Column"
+                font_size: "14sp"
+            Label:
+                text: root.column
+                font_size: "25sp"
+        Widget:
+            size_hint:(2,1)
+                
+    
+    
+    BoxLayout:
+        orientation: 'horizontal'
+        Widget:
+            size_hint:(0.6,1)
+        MiddleButton:
+            id: mainBtn
+            on_press: root.buttonDown()
+            on_release: root.nextClicked(root.getAmnt(1), 0)
+            always_release: True
+            
+        Widget:
+            size_hint:(0.6,1)
+    
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: (1, 0.3)
+        Widget:
+            size_hint:(0.6,1)
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 10
+            
+            
+            NavBtn:
+                on_release: root.backtoStart()
+                canvas:
+                    Color:
+                        rgba: (0.7,0.7,0.7,1)
+                    Triangle: 
+                        points: [self.pos[0] + self.width - self.width/1.2, self.pos[1] + self.height/2, self.pos[0] + self.width/1.2, self.pos[1] + self.height/1.2, self.pos[0] + self.width/1.2, self.pos[1] + self.height - self.height/1.2]
+                   
+            NavBtn:
+
+            NavBtn:
+                on_release: root.nextClicked(1,1,1) 
+                canvas:
+                    Color:
+                        rgba: (0.7,0.7,0.7,1)
+                    Triangle: 
+                        points: [self.pos[0] + self.width/1.2, self.pos[1] + self.height/2, self.pos[0] + self.width - self.width/1.2, self.pos[1] + self.height/1.2, self.pos[0] + self.width - self.width/1.2, self.pos[1] + self.height - self.height/1.2]
+            
+
+        Widget:
+            size_hint:(0.6,1)
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: (1, 0.2)
+        spacing: "10sp"
+        
+        Label:
+            text: root.posString
+            text_size: self.width, self.height
+            halign: 'center'
+            valign: 'center'
+        Label:
+            text: root.percString
+            text_size: self.width, self.height
+            halign: 'center'
+            valign: 'center'
+        
+        IconImage:
+            id: iconIm
+            source: root.imgIcon
+            on_release: root.imageOpen(root.imgIcon)
+            size: self.size
+
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: (1,0.2)
+        padding: "10sp"
+        spacing: "5sp"
+        LabelButton:
+            text: "Shopping List"
+            on_release: root.shoppingListOpen()
+            size_hint: (0.5, 0.8)
+            text_size: self.width, self.height
+            size: self.parent.size
+            halign: 'center'
+            valign: 'center'
+            pos_hint: {'center_x': 0.5, 'center_y': .5}
+                        
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 0.5, 1
+            LabelButton:
+                text: "Projects"
+                on_release: root.pop.open()
+                size_hint: (1, 0.8)
+                text_size: self.width, self.height
+                size: self.parent.size
+                halign: 'center'
+                valign: 'center'
+                pos_hint: {'center_x': 0.5, 'center_y': .5}
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 0.5, 1
+            LabelButton:
+                text: "Main Menu"
+                #on_release: root.pop.open()
+                on_release: root.manager.current = 'MainMenu'
+                size_hint: (1, 0.8)
+                text_size: self.width, self.height
+                size: self.parent.size
+                halign: 'center'
+                valign: 'center'
+                pos_hint: {'center_x': 0.5, 'center_y': .5}
+        
+
+<NavBtn>
+    on_press: root.buttonDown()
+    on_release: root.buttonUp()
+    always_release: True
+    AnchorLayout:
+        
+        canvas:
+            Color:
+                rgba: root.col
+            RoundedRectangle:
+                size: root.size
+                pos: root.pos
+                radius: [10,]
+
+<MiddleButton>
+    #Okay, so there must be a border
+    #on_press: root.pressed_down()
+    #on_release: root.pressed_up()
+    
+    colorText:colorText
+    colorRGB:colorRGB
+    amount:amount
+    btn:btn
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        
+        size: root.width, root.height
+        pos: root.pos
+        canvas:
+            Color:
+                rgba: (0.3,0.3,0.3  ,1)
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [10,]
+        BoxLayout:
+            id:btn
+            orientation: 'vertical'
+            size_hint: (None, None)
+            size: root.width/1.02, root.height/1.02
+            anchor_x: 'center'
+            anchor_y: 'center'
+            canvas:
+                Color:
+                    rgba: (0,0,0,1)
+                
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [10,]
+            Label: 
+                
+                id: colorText
+                text: "Hello"
+                font_size: self.width/9
+                text_size: root.width, None
+                size: self.texture_size
+                halign: 'center'
+                
+            AnchorLayout:
+                size_hint: (1, 1.1)
+                BoxLayout:
+                    size_hint: (0.8, 1)
+                    id:colorRGB  
+                    
+                    canvas:
+                        Color:
+                            rgba: root.canvasCol
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10,]
+            Label:
+                id: amount
+                text: "100"
+                font_size: "20sp"
+            
+
+        
+            
+            
+           
+<ShoppingList>
+    separator_height:0
+    title : ''
+    totText1:totText1
+    totText2:totText2
+    grid:grid
+    
+    
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: "20sp"
+        spacing: "10sp"
+        canvas:
+            Color:
+                rgba: (0,0,0,1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        
+
+        Label:
+            font_size: "20sp"
+            text: "Shopping List"
+            size_hint:(1, 0.1)
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint:(1, 0.1)
+            padding: "10sp"
+            Label:
+                font_size: "16sp"
+                text:"Color"
+                
+            Label:
+                font_size: "16sp"
+                text: "Name"
+
+            Label:
+                font_size: "16sp"
+                text: "Amount"
+#            Label:
+ #               font_size:"16sp"
+  #              text: "More"
+        ScrollView:
+            size: self.size
+            BoxLayout:
+                id:grid
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: "10sp"
+                
+        #shoppinglistitems go here
+
+        	#Label:
+        	#	id:txt
+             #   size_hint: (None, None)     # <<<<<<<<<<
+        	#	size: self.texture_size         
+             #   justify: 'left'
+                #text: root.contentText
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint:(1,0.1)
+
+            BoxLayout:
+                orientation: 'horizontal'
+                #spacing: 30
+                ScrollView:   
+                    size: self.size
+                    do_scroll_x : False
+                    do_scroll_y: False 
+                    Label:
+                        id:totText2
+                        font_size: "12sp"
+                        text_size: self.width, self.height
+                        size_hint_x: 1
+                        halign: 'center'
+                        valign: 'center'
+                    
+                ScrollView:   
+                    size: self.size
+                    do_scroll_x : False
+                    do_scroll_y: False 
+                    Label:
+                        id:totText1
+                        font_size: "12sp"
+                        text_size: self.width, self.height
+                        size_hint_x: 1
+                        halign: 'center'
+                        valign: 'center'
+                            
+                
+        LabelButton:
+            text: "Close"
+            on_release: root.dismiss()
+            size_hint: (1, 0.1)
+            text_size: self.width, self.height
+            size: self.parent.size
+            halign: 'center'
+            valign: 'center'
+            pos_hint: {'center_x': 0.5, 'center_y': .5}
+            
+<CanvasWidget>
+    canvas:
+        Color: 
+            rgba: root.col
+
+        Ellipse:
+            pos: self.width/2 - self.height/2, self.y
+            size: self.height, self.height
+
+
+
+#####################
+#   MIGHT DELETE
+#####################
+
+<posDisplay>
+    gridId:gridId
+    pos:pos
+    BoxLayout:
+        orientation: 'horizontal'
+        Label:
+            id: gridId
+        Label:
+            id: pos
+
+            
+
+
+<ShoppingListItem>
+    can:can
+    colLabel:colLabel
+    amntLabel:amntLabel
+    cols: 3
+    justify: 'left'
+    size_hint: 1 , None
+    height: "80sp"
+    #col_force_default: True
+    padding: "10sp"
+    spacing: "10sp"
+    
+    canvas:
+        Color:
+            rgba: (1,1,1,0.1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    
+    BoxLayout:
+        orientation: 'horizontal'
+        size: self.size
+        id : can
+        
+    ScrollView:   
+        size: self.size
+        do_scroll_x : False
+        do_scroll_y: False 
+        Label:
+            id:colLabel
+            text_size: self.width, None
+            size_hint_x: 1
+            halign: 'left'
+            valign: 'middle'
+
+    #Amount
+    Label:
+        id:amntLabel
+        font_size: "16sp"
+
+
+
+
+<ImagePop>
+    src:src
+    title: ""
+    separator_height: 0
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        Image:
+            id:src
+            #source: root.imgIcon
+            size: self.width, self.height
+            allow_stretch:True 
+        LabelButton:
+            text: "Close"
+            size_hint: (0.2,0.05)
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            on_release: root.dismiss()
+
+<JumpWindow>
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 20
+        BoxLayout:
+            orientation: 'horizontal'
+            BoxLayout:
+                orientation: 'vertical'
+                background_color: (0.5,0.5,0.5)
+                Label:
+                    text: "Row"
+                TextInput:
+                    size_hint: (0.5,0.5)
+                    focus: True
+            BoxLayout:
+                orientation: 'vertical'
+                background_color: (0.5,0.5,0.5)
+                Label:
+                    text: "Column"
+                TextInput:
+                    size_hint: (0.5,0.5)
+
+<ProjectsPopup>
+    grid:grid
+    spacing: "10sp"
+    title: ''
+    separator_height: 0
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: "20sp"
+        padding: "10sp"
+        canvas:
+            Color:
+                rgba: (0,0,0,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Projects"
+            font_size: "24sp"
+            size_hint:(1, 0.1)
+            justify: 'top'
+        ScrollView:    
+            size: self.size
+            BoxLayout:
+                size_hint_y: None
+                height: self.minimum_height
+                id:grid            
+                orientation: 'vertical'
+                spacing: "10sp"
+                padding: "20sp"
+        LabelButton:
+            
+            text: "Close"
+            #background_normal: ''
+            #background_color: (1,0,0,0.5)
+            size_hint: (0.2,0.05)
+            pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+            on_release: root.dismiss()
+
+<ProjectsBtn>
+    image:image
+    projName:projName
+    mediumName:mediumName
+    progress:progress
+    cols: 4
+    size_hint: 1 , None
+    height: '100sp'
+    dimensions:dimensions
+    #on_release: root.pressed()
+    
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 0.1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    spacing: 20
+    padding: 10
+        
+        
+        
+    #Image on far left
+    Image:
+        id: image
+          
+    #Name of Projects
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: projName
+            font_size: "16dp"
+        Label:
+            id: mediumName
+            font_size: "10dp"
+        #Progress, eventually add a canvas and give a visual representation of how far we are
+    Label:
+        id: dimensions
+        font_size: "16dp"
+    Label:
+        id: progress
+        font_size: "16dp"
+        
+        
+        
+            
+
